@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -34,9 +35,17 @@ public class MapGenerator : MonoBehaviour
                 float currentHeight = noiseMap[x, y];
                 for (int i = 0; i < regions.Length; i++)
                 {
+
                     if (currentHeight <= regions[i].height)
                     {
-                        colorMap[y*mapWidth+x] = regions[i].color;
+                        if (i==0)
+                        {
+                            colorMap[y * mapWidth + x] = regions[i].color;
+                        }
+                        else
+                        {
+                            colorMap[y* mapWidth + x] = Color.Lerp(regions[i-1].color, regions[i].color, currentHeight);
+                        }
                         break;
                     }
                 }
@@ -81,3 +90,25 @@ public class MapGenerator : MonoBehaviour
         public Color color;
     }
 }
+
+//public void GenerateMap()
+//{
+//    float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
+//
+//    Color[] colorMap = new Color[mapHeight * mapWidth];
+//    for (int y = 0; y < mapHeight; y++)
+//    {
+//        for (int x = 0; x < mapWidth; x++)
+//        {
+//            float currentHeight = noiseMap[x, y];
+//            for (int i = 0; i < regions.Length; i++)
+//            {
+//                if (currentHeight <= regions[i].height)
+//                {
+//                    colorMap[y * mapWidth + x] = regions[i].color;
+//                    break;
+//                }
+//            }
+//        }
+//    }
+//}
