@@ -26,6 +26,9 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private ObjectPlacer objectPlacer;
 
+    [SerializeField]
+    private ResourceManager resourceManager;
+
     IBuildingState buildingState;
 
     private void Start()
@@ -45,8 +48,16 @@ public class PlacementSystem : MonoBehaviour
                                            database,
                                            floorData,
                                            structureData,
+                                           resourceManager,
                                            objectPlacer);
-        inputManager.OnClicked += PlaceStructure;
+        if (ID == 1)
+        {
+            inputManager.OnHeld += PlaceStructure;
+        }
+        else
+        {
+            inputManager.OnClicked += PlaceStructure;
+        }
         inputManager.OnExit += StopPlacement;
     }
 
@@ -60,6 +71,7 @@ public class PlacementSystem : MonoBehaviour
                                           structureData,
                                           objectPlacer);
         inputManager.OnClicked += PlaceStructure;
+        inputManager.OnHeld += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
 
@@ -76,13 +88,6 @@ public class PlacementSystem : MonoBehaviour
         buildingState.OnAction(gridPosition);
     }
 
-    //private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
-    //{
-    //    GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : structureData;
-
-    //    return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-    //}
-
     public void StopPlacement()
     {
         if (buildingState == null)
@@ -90,6 +95,7 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false);
         buildingState.EndState();
         inputManager.OnClicked -= PlaceStructure;
+        inputManager.OnHeld -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
         lastDetectedPosition = Vector3Int.zero;
         buildingState = null;

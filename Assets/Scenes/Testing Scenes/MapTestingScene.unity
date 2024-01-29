@@ -260,102 +260,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &664010429
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 664010431}
-  - component: {fileID: 664010430}
-  - component: {fileID: 664010432}
-  m_Layer: 0
-  m_Name: MapGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &664010430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664010429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3d9a8c7a05abf7439f36ab08bd5d3ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drawMode: 1
-  mapWidth: 275
-  mapHeight: 275
-  noiseScale: 39
-  octaves: 2
-  persistance: 0.452
-  lacunarity: 1
-  seed: 6755485
-  offset: {x: 4.5, y: 1}
-  autoUpdate: 1
-  regions:
-  - name: DeepWater
-    height: 0.16
-    color: {r: 0, g: 0.33216625, b: 0.6855345, a: 0}
-  - name: Water
-    height: 0.23
-    color: {r: 0, g: 0.36756074, b: 0.7610062, a: 1}
-  - name: Sand
-    height: 0.3
-    color: {r: 0.95881116, g: 1, b: 0.47484267, a: 0}
-  - name: Sand2
-    height: 0.35
-    color: {r: 1, g: 0.992501, b: 0.380503, a: 0}
-  - name: Land
-    height: 0.65
-    color: {r: 0.15396276, g: 0.6792453, b: 0.11320748, a: 0}
-  - name: HighLand
-    height: 0.8
-    color: {r: 0.12117211, g: 0.44654083, b: 0.096890874, a: 0}
-  - name: Mountain
-    height: 0.87
-    color: {r: 0.37254903, g: 0.26572427, b: 0.07208964, a: 0}
-  - name: HighMountain
-    height: 0.95
-    color: {r: 0.2578616, g: 0.17398234, b: 0.018650346, a: 0}
-  - name: Snow
-    height: 1
-    color: {r: 1, g: 1, b: 1, a: 0}
---- !u!4 &664010431
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664010429}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &664010432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664010429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efae69421f8c09b42ae98ece6ab5d9b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textureRenderer: {fileID: 1782134242}
 --- !u!1 &1102780021
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +470,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 193035871}
-  moveSpeed: 40
+  zoomStep: 0
+  minCamSize: 0
+  maxCamSize: 0
+  IsInCameraMode: 0
 --- !u!1 &1782134240
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,12 +557,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!1001 &2707023589249741907
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442576557618693351, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: m_Name
+      value: MapGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523247278439537340, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: textureRenderer
+      value: 
+      objectReference: {fileID: 1782134242}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 193035872}
-  - {fileID: 664010431}
+  - {fileID: 2707023589249741907}
   - {fileID: 1782134244}
   - {fileID: 1102780023}
   - {fileID: 1658621404}

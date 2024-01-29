@@ -14,12 +14,14 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private LayerMask placementLayermask;
 
-    public event Action OnClicked, OnExit;
+    public event Action OnClicked, OnExit, OnHeld;
 
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
             OnClicked?.Invoke();
+        if(Input.GetMouseButton(0))
+            OnHeld?.Invoke();
         if (Input.GetKeyDown(KeyCode.Escape))
             OnExit?.Invoke();
     }

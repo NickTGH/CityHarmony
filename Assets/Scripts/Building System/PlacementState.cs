@@ -11,6 +11,7 @@ public class PlacementState : IBuildingState
     ObjectsDatabaseSO database;
     GridData floorData;
     GridData structureData;
+    ResourceManager resourceManager;
     ObjectPlacer objectPlacer;
 
     public PlacementState(int iD,
@@ -19,6 +20,7 @@ public class PlacementState : IBuildingState
                           ObjectsDatabaseSO database,
                           GridData floorData,
                           GridData structureData,
+                          ResourceManager resourceManager,
                           ObjectPlacer objectPlacer)
     {
         ID = iD;
@@ -27,6 +29,7 @@ public class PlacementState : IBuildingState
         this.database = database;
         this.floorData = floorData;
         this.structureData = structureData;
+        this.resourceManager = resourceManager;
         this.objectPlacer = objectPlacer;
 
         selectedObjectIndex = database.objectsData.FindIndex(x => x.ID == ID);
@@ -49,14 +52,15 @@ public class PlacementState : IBuildingState
 
     public void OnAction(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex)
+								 && resourceManager.CanAffordStructure(database.objectsData[selectedObjectIndex].ResourceCost);
         if (placementValidity == false)
         {
             return;
         }
 
-        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
-
+        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition),resourceManager);
+        resourceManager.DecreaseResourcesAfterPlacement(database.objectsData[selectedObjectIndex].ResourceCost);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : structureData;
         selectedData.AddObjectAt(gridPosition,
             database.objectsData[selectedObjectIndex].Size,
@@ -70,12 +74,13 @@ public class PlacementState : IBuildingState
     {
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : structureData;
 
-        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
+        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,selectedObjectIndex);
     }
 
     public void UpdateState(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex)
+								 && resourceManager.CanAffordStructure(database.objectsData[selectedObjectIndex].ResourceCost);
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
     }
 }

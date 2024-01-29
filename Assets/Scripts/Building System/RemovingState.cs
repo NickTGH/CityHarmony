@@ -35,11 +35,11 @@ public class RemovingState : IBuildingState
     public void OnAction(Vector3Int gridPosition)
     {
         GridData selectedData = null;
-        if(structureData.CanPlaceObjectAt(gridPosition,Vector2Int.one) == false)
+        if(structureData.CanPlaceObjectAt(gridPosition,Vector2Int.one,-1) == false)
         {
             selectedData = structureData;
         }
-        else if(floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one) == false)
+        else if(floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1) == false)
         {
             selectedData= floorData;
         }
@@ -62,8 +62,8 @@ public class RemovingState : IBuildingState
 
     private bool CheckIfSelectionIsValid(Vector3Int gridPosition)
     {
-        return !(structureData.CanPlaceObjectAt(gridPosition, Vector2Int.one)
-               && floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one));
+        return !(structureData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1)
+               && floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1));
     }
 
     public void UpdateState(Vector3Int gridPosition)

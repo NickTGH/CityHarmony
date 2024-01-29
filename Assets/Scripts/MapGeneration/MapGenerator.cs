@@ -5,110 +5,100 @@ using UnityEngine.Rendering.Universal;
 
 public class MapGenerator : MonoBehaviour
 {
-    public enum DrawMode {NoiseMap, ColorMap };
-    public DrawMode drawMode;
+	public enum DrawMode { NoiseMap, ColorMap };
+	public DrawMode drawMode;
 
-    public int mapWidth;
-    public int mapHeight;
-    public float noiseScale;
+	public int mapWidth;
+	public int mapHeight;
+	public float noiseScale;
 
-    public int octaves;
-    [Range(0, 1)]
-    public float persistance;
-    public float lacunarity;
+	public int octaves;
+	[Range(0, 1)]
+	public float persistance;
+	public float lacunarity;
 
-    public int seed;
-    public Vector2 offset;
+	public int seed;
+	public Vector2 offset;
 
-    public bool autoUpdate;
+	public bool autoUpdate;
 
-    public TerrainType[] regions;
-    public void GenerateMap()
-    {
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth,mapHeight,seed,noiseScale, octaves, persistance, lacunarity, offset);
+	public TerrainType[] regions;
 
-        Color[] colorMap = new Color[mapHeight * mapWidth];
-        for (int y = 0; y < mapHeight; y++)
-        {
-            for (int x = 0; x < mapWidth; x++)
-            {
-                float currentHeight = noiseMap[x, y];
-                for (int i = 0; i < regions.Length; i++)
-                {
+	public ObjectPlacer objectPlacer;
+	public GameObject treeObstacle;
+	System.Random random = new System.Random();
+	public void GenerateMap()
+	{
+		float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
 
-                    if (currentHeight <= regions[i].height)
-                    {
-                        if (i==0)
-                        {
-                            colorMap[y * mapWidth + x] = regions[i].color;
-                        }
-                        else
-                        {
-                            colorMap[y* mapWidth + x] = Color.Lerp(regions[i-1].color, regions[i].color, currentHeight);
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+		Color[] colorMap = new Color[mapHeight * mapWidth];
+		for (int y = 0; y < mapHeight; y++)
+		{
+			for (int x = 0; x < mapWidth; x++)
+			{
+				float currentHeight = noiseMap[x, y];
+				for (int i = 0; i < regions.Length; i++)
+				{
 
-        MapDisplay display = FindObjectOfType<MapDisplay>();
-        if (drawMode == DrawMode.NoiseMap)
-        {
-            display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
-        }
-        else if(drawMode == DrawMode.ColorMap)
-        {
-            display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
-        }
-    }
-    private void OnValidate()
-    {
-        if (mapWidth < 1)
-        {
-            mapWidth = 1;
-        }
-        if (mapHeight < 1)
-        {
-            mapHeight = 1;
-        }
-        if(lacunarity < 1)
-        {
-            lacunarity = 1;
-        }
-        if (octaves < 0)
-        {
-            octaves = 0;
-        }
-    }
+					if (currentHeight <= regions[i].height)
+					{
+						if (i == 0)
+						{
+							colorMap[y * mapWidth + x] = regions[i].color;
+						}
+						else
+						{
+							if (regions[i].name == "HighLand")
+							{
+								int chanceOfTreeSpawn = random.Next(1000);
+								if (chanceOfTreeSpawn > 999)
+								{
+									objectPlacer.PlaceObstacle(treeObstacle, new Vector3(x, y, 0));
+								}
+							}
+							colorMap[y * mapWidth + x] = Color.Lerp(regions[i - 1].color, regions[i].color, currentHeight);
+						}
+						break;
+					}
+				}
+			}
+		}
 
-    [System.Serializable]
-    public struct TerrainType
-    {
-        public string name;
-        public float height;
-        public Color color;
-    }
+		MapDisplay display = FindObjectOfType<MapDisplay>();
+		if (drawMode == DrawMode.NoiseMap)
+		{
+			display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
+		}
+		else if (drawMode == DrawMode.ColorMap)
+		{
+			display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
+		}
+	}
+	private void OnValidate()
+	{
+		if (mapWidth < 1)
+		{
+			mapWidth = 1;
+		}
+		if (mapHeight < 1)
+		{
+			mapHeight = 1;
+		}
+		if (lacunarity < 1)
+		{
+			lacunarity = 1;
+		}
+		if (octaves < 0)
+		{
+			octaves = 0;
+		}
+	}
+
+	[System.Serializable]
+	public struct TerrainType
+	{
+		public string name;
+		public float height;
+		public Color color;
+	}
 }
-
-//public void GenerateMap()
-//{
-//    float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
-//
-//    Color[] colorMap = new Color[mapHeight * mapWidth];
-//    for (int y = 0; y < mapHeight; y++)
-//    {
-//        for (int x = 0; x < mapWidth; x++)
-//        {
-//            float currentHeight = noiseMap[x, y];
-//            for (int i = 0; i < regions.Length; i++)
-//            {
-//                if (currentHeight <= regions[i].height)
-//                {
-//                    colorMap[y * mapWidth + x] = regions[i].color;
-//                    break;
-//                }
-//            }
-//        }
-//    }
-//}
