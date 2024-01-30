@@ -21,6 +21,7 @@ public class MapGenerator : MonoBehaviour
 	public Vector2 offset;
 
 	public bool autoUpdate;
+	public bool spawnTrees;
 
 	public TerrainType[] regions;
 
@@ -29,8 +30,13 @@ public class MapGenerator : MonoBehaviour
 	System.Random random = new System.Random();
 	public void GenerateMap()
 	{
-		float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
+		foreach (var objectPlaced in objectPlacer.placedGameObjects)
+		{
+			DestroyImmediate(objectPlaced);
+		}
+		objectPlacer.placedGameObjects.Clear();
 
+		float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
 		Color[] colorMap = new Color[mapHeight * mapWidth];
 		for (int y = 0; y < mapHeight; y++)
 		{
@@ -48,12 +54,12 @@ public class MapGenerator : MonoBehaviour
 						}
 						else
 						{
-							if (regions[i].name == "HighLand")
+							if (regions[i].name == "HighLand" && spawnTrees)
 							{
 								int chanceOfTreeSpawn = random.Next(1000);
-								if (chanceOfTreeSpawn > 999)
+								if (chanceOfTreeSpawn > 100)
 								{
-									objectPlacer.PlaceObstacle(treeObstacle, new Vector3(x, y, 0));
+									objectPlacer.PlaceObstacle(treeObstacle, new Vector3(x - mapWidth*0.5f,y - mapHeight*0.5f,0) * 10);
 								}
 							}
 							colorMap[y * mapWidth + x] = Color.Lerp(regions[i - 1].color, regions[i].color, currentHeight);

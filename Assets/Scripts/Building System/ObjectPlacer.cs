@@ -7,7 +7,7 @@ using UnityEngine;
 public class ObjectPlacer : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> placedGameObjects = new();
+    public List<GameObject> placedGameObjects = new();
 
     public int PlaceObject(GameObject prefab, Vector3 position,ResourceManager resourceManager)
     {

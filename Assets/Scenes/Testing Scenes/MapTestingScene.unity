@@ -285,7 +285,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102780021}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 10, y: 10, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -298,7 +298,7 @@ Transform:
   m_GameObject: {fileID: 1102780021}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -485,6 +485,7 @@ GameObject:
   - component: {fileID: 1782134244}
   - component: {fileID: 1782134243}
   - component: {fileID: 1782134242}
+  - component: {fileID: 1782134245}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -557,6 +558,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!114 &1782134245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782134240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aed43d5806ad464c8a9fa00dac24610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placedGameObjects: []
 --- !u!1001 &2707023589249741907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -565,6 +579,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: mapWidth
+      value: 275
+      objectReference: {fileID: 0}
+    - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: autoUpdate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: objectPlacer
+      value: 
+      objectReference: {fileID: 1782134245}
+    - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: treeObstacle
+      value: 
+      objectReference: {fileID: 3211821642104755216, guid: db33c5d0f73985341ac8d9e73b563c53, type: 3}
     - target: {fileID: 1436957527694016643, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
