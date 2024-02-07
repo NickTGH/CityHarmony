@@ -29,7 +29,7 @@ public class GridData
         {
             for (int y = 0; y < objectSize.y; y++)
             {
-                returnValues.Add(gridPosition + new Vector3Int(x,y, 0));
+                returnValues.Add((gridPosition + new Vector3Int(x,y, 0))*5);
             }
         }
         return returnValues;
@@ -41,7 +41,7 @@ public class GridData
 		{
 			for (int y = -1; y < buildingSize.y+1; y++)
 			{
-				returnValues.Add(gridPosition + new Vector3Int(x, y, 0));
+				returnValues.Add((gridPosition + new Vector3Int(x, y, 0))*5);
 			}
 		}
         foreach (var pos in returnValues)
@@ -57,20 +57,23 @@ public class GridData
         return false;
 	}
 
-    public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex)
+    public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex, MapGenerator mapGenerator)
     {
-        //float[,] noiseMap = Noise.GenerateNoiseMap(mapGenerator.mapWidth, mapGenerator.mapHeight, mapGenerator.seed,mapGenerator.noiseScale,mapGenerator.octaves, mapGenerator.persistance, mapGenerator.lacunarity, mapGenerator.offset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapGenerator.mapWidth, mapGenerator.mapHeight, mapGenerator.seed,mapGenerator.noiseScale,mapGenerator.octaves, mapGenerator.persistance, mapGenerator.lacunarity, mapGenerator.offset);
         List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition, objectSize);
+        //Debug.Log(gridPosition);
         foreach (var pos in positionToOccupy)
         {
             if (placedObjects.ContainsKey(pos))
             {
                 return false;
             }
-            //if (noiseMap[pos.x,pos.y] < 0.23f || noiseMap[pos.x,pos.y] > 0.8f)
-            //{
-            //    return false;
-            //}
+			Vector2Int noiseMapValues = ConvertToNoiseMapValues(pos.x, pos.y, mapGenerator.mapWidth);
+            //Debug.Log(noiseMap[noiseMapValues.x, noiseMapValues.y]);
+			if (noiseMap[noiseMapValues.x,noiseMapValues.y] < 0.33f || noiseMap[noiseMapValues.x,noiseMapValues.y] > 0.78f)
+            {
+                return false;
+            }
         }
         if (selectedIndex != 0)
         {
@@ -78,7 +81,42 @@ public class GridData
 		}
         return true;
     }
+	public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex, float[,]noiseMap,int mapWidth)
+	{
+		List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition, objectSize);
+		foreach (var pos in positionToOccupy)
+		{
+			if (placedObjects.ContainsKey(pos))
+			{
+				return false;
+			}
+			Vector2Int noiseMapValues = ConvertToNoiseMapValues(pos.x, pos.y,mapWidth);
+			Debug.Log(noiseMap[noiseMapValues.x, noiseMapValues.y]);
+			if (noiseMap[noiseMapValues.x, noiseMapValues.y] < 0.3f || noiseMap[noiseMapValues.x, noiseMapValues.y] > 0.8f)
+			{
+				return false;
+			}
+		}
+		if (selectedIndex != 0)
+		{
+			return CalculateBuildingSurroundings(gridPosition, objectSize);
+		}
+		return true;
+	}
 
+	private Vector2Int ConvertToNoiseMapValues(int x, int y, int mapWidth)
+    {
+        float oldX = float.Parse(x.ToString());
+        float oldY = float.Parse(y.ToString());
+        float oldRange = (mapWidth-1)*10;
+        float oldMin = -oldRange / 2;
+        float newX = ((oldX - oldMin)/oldRange) * (mapWidth - 1);
+        float newY = ((oldY - oldMin)/oldRange) * (mapWidth - 1);
+        newX = Mathf.Floor(Math.Abs(newX));
+        newY = Mathf.Floor(Mathf.Abs(newY));
+        //Debug.Log(new Vector2Int((int)newX, (int)newY));
+        return new Vector2Int((int)newX, (int)newY);
+    }
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
         if (placedObjects.ContainsKey(gridPosition) == false)

@@ -55,19 +55,19 @@ public class MoveCamera : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            camera.transform.position += new Vector3(-10, 0, 0) * Time.deltaTime;
+            camera.transform.position += new Vector3(-100, 0, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            camera.transform.position += new Vector3(10, 0, 0) * Time.deltaTime;
+            camera.transform.position += new Vector3(100, 0, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            camera.transform.position += new Vector3(0, 10, 0) * Time.deltaTime;
+            camera.transform.position += new Vector3(0, 100, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            camera.transform.position += new Vector3(0, -10, 0) * Time.deltaTime;
+            camera.transform.position += new Vector3(0, -100, 0) * Time.deltaTime;
         }
     }
     private void ChangeZoom()

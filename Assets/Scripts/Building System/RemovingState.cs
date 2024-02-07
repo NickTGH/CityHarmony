@@ -11,18 +11,21 @@ public class RemovingState : IBuildingState
     GridData floorData;
     GridData structureData;
     ObjectPlacer objectPlacer;
+    MapGenerator mapGenerator;
 
     public RemovingState(Grid grid,
                        PreviewSystem previewSystem,
                        GridData floorData,
                        GridData structureData,
-                       ObjectPlacer objectPlacer)
+                       ObjectPlacer objectPlacer,
+                       MapGenerator mapGenerator)
     {
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.floorData = floorData;
         this.structureData = structureData;
         this.objectPlacer = objectPlacer;
+        this.mapGenerator = mapGenerator;
 
         previewSystem.StartShowingRemovePreview();
     }
@@ -35,11 +38,11 @@ public class RemovingState : IBuildingState
     public void OnAction(Vector3Int gridPosition)
     {
         GridData selectedData = null;
-        if(structureData.CanPlaceObjectAt(gridPosition,Vector2Int.one,-1) == false)
+        if(structureData.CanPlaceObjectAt(gridPosition,Vector2Int.one,-1,mapGenerator) == false)
         {
             selectedData = structureData;
         }
-        else if(floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1) == false)
+        else if(floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1, mapGenerator) == false)
         {
             selectedData= floorData;
         }
@@ -62,8 +65,8 @@ public class RemovingState : IBuildingState
 
     private bool CheckIfSelectionIsValid(Vector3Int gridPosition)
     {
-        return !(structureData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1)
-               && floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1));
+        return !(structureData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1,mapGenerator)
+               && floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one,-1, mapGenerator));
     }
 
     public void UpdateState(Vector3Int gridPosition)

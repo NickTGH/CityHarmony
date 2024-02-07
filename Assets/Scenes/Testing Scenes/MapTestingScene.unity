@@ -580,12 +580,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: drawMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
       propertyPath: mapWidth
       value: 275
       objectReference: {fileID: 0}
     - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
       propertyPath: autoUpdate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
+      propertyPath: spawnTrees
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1132031561794134424, guid: 944f59800436da943b9b0146d01ac64d, type: 3}
       propertyPath: objectPlacer

@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class HouseScript : MonoBehaviour
 {
-    private bool effectActivated = false;
+    public ResourceManager _resourceManager;
+    [SerializeField]
+    private int peopleCapacity = 3;
+    private bool activatedEffect = false;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (effectActivated)
-            return;
-
+        if (!activatedEffect && _resourceManager!=null)
+        {
+			_resourceManager.IncreasePopulation(peopleCapacity);
+            activatedEffect = true;
+		}
     }
 }

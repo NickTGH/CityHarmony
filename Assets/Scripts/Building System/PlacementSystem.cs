@@ -8,7 +8,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private InputManager inputManager;
     [SerializeField]
-    private Grid grid;
+    public Grid grid;
 
     [SerializeField]
     private ObjectsDatabaseSO database;
@@ -16,7 +16,8 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject gridVisualization;
 
-    private GridData floorData, structureData;
+    [HideInInspector]
+    public GridData floorData, structureData;
 
     [SerializeField]
     private PreviewSystem preview;
@@ -29,9 +30,12 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private ResourceManager resourceManager;
 
+    [SerializeField]
+    private MapGenerator mapGenerator;
+
     IBuildingState buildingState;
 
-    private void Start()
+    private void Awake()
     {
         StopPlacement();
         floorData = new();
@@ -49,7 +53,8 @@ public class PlacementSystem : MonoBehaviour
                                            floorData,
                                            structureData,
                                            resourceManager,
-                                           objectPlacer);
+                                           objectPlacer,
+                                           mapGenerator);
         if (ID == 1)
         {
             inputManager.OnHeld += PlaceStructure;
@@ -69,7 +74,8 @@ public class PlacementSystem : MonoBehaviour
                                           preview,
                                           floorData,
                                           structureData,
-                                          objectPlacer);
+                                          objectPlacer,
+                                          mapGenerator);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnHeld += PlaceStructure;
         inputManager.OnExit += StopPlacement;

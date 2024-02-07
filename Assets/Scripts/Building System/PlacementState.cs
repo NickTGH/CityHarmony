@@ -13,6 +13,7 @@ public class PlacementState : IBuildingState
     GridData structureData;
     ResourceManager resourceManager;
     ObjectPlacer objectPlacer;
+    MapGenerator mapGenerator;
 
     public PlacementState(int iD,
                           Grid grid,
@@ -21,7 +22,8 @@ public class PlacementState : IBuildingState
                           GridData floorData,
                           GridData structureData,
                           ResourceManager resourceManager,
-                          ObjectPlacer objectPlacer)
+                          ObjectPlacer objectPlacer,
+                          MapGenerator mapGenerator)
     {
         ID = iD;
         this.grid = grid;
@@ -31,13 +33,14 @@ public class PlacementState : IBuildingState
         this.structureData = structureData;
         this.resourceManager = resourceManager;
         this.objectPlacer = objectPlacer;
+        this.mapGenerator = mapGenerator;
 
         selectedObjectIndex = database.objectsData.FindIndex(x => x.ID == ID);
         if (selectedObjectIndex > -1)
         {
             previewSystem.StartShowingPlacementPreview(
                 database.objectsData[selectedObjectIndex].Prefab,
-                database.objectsData[selectedObjectIndex].Size);
+                database.objectsData[selectedObjectIndex].Size*5);
         }
         else
         {
@@ -52,7 +55,7 @@ public class PlacementState : IBuildingState
 
     public void OnAction(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex)
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex, mapGenerator)
 								 && resourceManager.CanAffordStructure(database.objectsData[selectedObjectIndex].ResourceCost);
         if (placementValidity == false)
         {
@@ -70,16 +73,16 @@ public class PlacementState : IBuildingState
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
     }
 
-    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
+    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex, MapGenerator mapGenerator)
     {
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : structureData;
 
-        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,selectedObjectIndex);
+        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size,selectedObjectIndex, mapGenerator);
     }
 
     public void UpdateState(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex)
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex, mapGenerator)
 								 && resourceManager.CanAffordStructure(database.objectsData[selectedObjectIndex].ResourceCost);
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
     }

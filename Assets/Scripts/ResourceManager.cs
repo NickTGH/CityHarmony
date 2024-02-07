@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -21,6 +22,12 @@ public class ResourceManager : MonoBehaviour
     public int MaxFoodAmount;
     [HideInInspector]
     public int MaxBuildingResourceAmount;
+    [HideInInspector]
+    public int MaxCitizenAmount;
+
+    public TextMeshProUGUI foodText;
+    public TextMeshProUGUI resourceText;
+    public TextMeshProUGUI citizenText;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -33,7 +40,7 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        DisplayStats();
     }
     
     private IEnumerator DecreaseResources()
@@ -59,6 +66,17 @@ public class ResourceManager : MonoBehaviour
     public void IncreaseFoodAmount(int amount)
     {
         FoodAmount += amount;
+    }
+    public void IncreasePopulation(int people)
+    {
+        CitizenAmount += people;
+    }
+
+    public void DisplayStats()
+    {
+        foodText.text = FoodAmount.ToString();
+        resourceText.text = BuildingResourceAmount.ToString();
+        citizenText.text = CitizenAmount.ToString();
     }
     private void GameOver() { }
 }

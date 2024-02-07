@@ -16,6 +16,10 @@ public class ObjectPlacer : MonoBehaviour
         {
             newObject.GetComponentInChildren<FieldScript>().resourceManager = resourceManager;
         }
+        if (newObject.GetComponentInChildren<HouseScript>() != null)
+        {
+            newObject.GetComponentInChildren<HouseScript>()._resourceManager = resourceManager;
+        }
         newObject.transform.position = position;
         placedGameObjects.Add(newObject);
         return placedGameObjects.Count - 1;
