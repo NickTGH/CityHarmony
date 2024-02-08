@@ -11,7 +11,7 @@ public class MoveCamera : MonoBehaviour
     private Image button;
 
     [SerializeField]
-    private float zoomStep, minCamSize, maxCamSize;
+    private float zoomStep, minCamSize, maxCamSize, defaultCamSize;
 
     private Vector3 dragOrigin;
 
@@ -19,8 +19,13 @@ public class MoveCamera : MonoBehaviour
 
     private void Start()
     {
+        if (defaultCamSize== 0)
+        {
+            defaultCamSize = minCamSize;
+        }
         button = GameObject.Find("MoveCameraButton").GetComponent<Image>();
         IsInCameraMode = false;
+        camera.orthographicSize = defaultCamSize;
     }
     void Update()
     {

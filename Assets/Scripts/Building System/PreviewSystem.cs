@@ -105,7 +105,7 @@ public class PreviewSystem : MonoBehaviour
     internal void StartShowingRemovePreview()
     {
         cellIndicator.SetActive(true);
-        PrepareCursor(Vector2Int.one);
+        PrepareCursor(new Vector2Int(5,5));
         ApplyFeedbackToCursor(false);
     }
 }

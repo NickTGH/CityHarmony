@@ -269,8 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: 
-  description: 
+  header: Cancel
+  description: Cancels building or removing actions
 --- !u!1 &36917527
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 94154512}
   - component: {fileID: 94154514}
   - component: {fileID: 94154513}
+  - component: {fileID: 94154515}
   m_Layer: 5
   m_Name: Population
   m_TagString: Untagged
@@ -396,6 +397,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94154511}
   m_CullTransparentMesh: 1
+--- !u!114 &94154515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94154511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: Population
+  description: The amount of people living in the town
 --- !u!1 &116912673
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +422,7 @@ GameObject:
   - component: {fileID: 116912674}
   - component: {fileID: 116912676}
   - component: {fileID: 116912675}
+  - component: {fileID: 116912677}
   m_Layer: 5
   m_Name: Resource
   m_TagString: Untagged
@@ -473,6 +489,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116912673}
   m_CullTransparentMesh: 1
+--- !u!114 &116912677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116912673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: Resource
+  description: The resources used for building new structures
 --- !u!1 &127684915
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +939,7 @@ GameObject:
   - component: {fileID: 297345922}
   - component: {fileID: 297345925}
   m_Layer: 3
-  m_Name: Plane
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1898,8 +1928,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: 
-  description: 
+  header: Field
+  description: 'Size: 2x2                                                                                                 
+    Cost: 15                                                                                           
+    Effect: Generates food over time'
 --- !u!1 &901243567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,6 +2471,7 @@ MonoBehaviour:
   zoomStep: 10
   minCamSize: 5
   maxCamSize: 100
+  defaultCamSize: 20
   IsInCameraMode: 0
 --- !u!4 &1288030297
 Transform:
@@ -3214,8 +3247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: 
-  description: 
+  header: House
+  description: 'Size: 2x2                                                                                                                         
+    Cost:10                                                                                                
+    Effect: Increases population by 3'
 --- !u!1 &1466467474
 GameObject:
   m_ObjectHideFlags: 0
@@ -3362,8 +3397,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: 
-  description: 
+  header: Road
+  description: 'Size: 1x1                                                                     
+    Cost: 1                                                                                                                   
+    Effect:  Other buildings must be placed next to a road'
 --- !u!1 &1529697297
 GameObject:
   m_ObjectHideFlags: 0
@@ -3668,39 +3705,51 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3187121718967459067, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3187121718967459067, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3187121718967459067, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 152.51
       objectReference: {fileID: 0}
     - target: {fileID: 3187121718967459067, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 42.19
       objectReference: {fileID: 0}
     - target: {fileID: 3187121718967459067, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 86.255
       objectReference: {fileID: 0}
     - target: {fileID: 3187121718967459067, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -31.095
       objectReference: {fileID: 0}
     - target: {fileID: 5244620323258193052, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_Pivot.x
       value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5244620323258193052, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244620323258193052, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 172.51
       objectReference: {fileID: 0}
     - target: {fileID: 5244620323258193052, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244620323258193052, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -87.01819
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244620323258193052, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 672.5602
       objectReference: {fileID: 0}
     - target: {fileID: 7341804683534862784, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_Name
@@ -3786,29 +3835,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7725719029512044515, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8782392719796722524, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8782392719796722524, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8782392719796722524, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 88.96
       objectReference: {fileID: 0}
     - target: {fileID: 8782392719796722524, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 24.61
       objectReference: {fileID: 0}
     - target: {fileID: 8782392719796722524, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 54.48
       objectReference: {fileID: 0}
     - target: {fileID: 8782392719796722524, guid: ad4e6d374f2c70748b8c2e79afb04e8f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -74.494995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3961,8 +4014,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: 
-  description: 
+  header: Camera
+  description: Click to toggle the camera controls.                                                                                        
+    Move camera with the arrow keys or by dragging the mouse.                                                                                    
+    Zoom in and out using + and -
 --- !u!1 &1874553017
 GameObject:
   m_ObjectHideFlags: 0
@@ -3974,6 +4029,7 @@ GameObject:
   - component: {fileID: 1874553018}
   - component: {fileID: 1874553020}
   - component: {fileID: 1874553019}
+  - component: {fileID: 1874553021}
   m_Layer: 5
   m_Name: Food
   m_TagString: Untagged
@@ -4040,6 +4096,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874553017}
   m_CullTransparentMesh: 1
+--- !u!114 &1874553021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874553017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb83551888dcb74995cc1f2361d63b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: Food
+  description: Used to feed the population. Decreases over time, depending on how
+    many peolpe are in the town
 --- !u!1 &1892247045
 GameObject:
   m_ObjectHideFlags: 0
@@ -4718,11 +4789,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1580947050}
-  - {fileID: 2083480204}
-  - {fileID: 331299079}
-  - {fileID: 1446284978}
-  - {fileID: 2025035137}
   - {fileID: 395799791}
+  - {fileID: 2083480204}
+  - {fileID: 1446284978}
   - {fileID: 1945326631}
   - {fileID: 297345924}
+  - {fileID: 331299079}
   - {fileID: 1743236566}
+  - {fileID: 2025035137}

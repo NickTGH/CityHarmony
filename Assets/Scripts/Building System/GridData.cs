@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridData
@@ -29,7 +30,7 @@ public class GridData
         {
             for (int y = 0; y < objectSize.y; y++)
             {
-                returnValues.Add((gridPosition + new Vector3Int(x,y, 0))*5);
+                returnValues.Add(gridPosition * 5 + new Vector3Int(x,y, 0));
             }
         }
         return returnValues;
@@ -91,7 +92,7 @@ public class GridData
 				return false;
 			}
 			Vector2Int noiseMapValues = ConvertToNoiseMapValues(pos.x, pos.y,mapWidth);
-			Debug.Log(noiseMap[noiseMapValues.x, noiseMapValues.y]);
+			//Debug.Log(noiseMap[noiseMapValues.x, noiseMapValues.y]);
 			if (noiseMap[noiseMapValues.x, noiseMapValues.y] < 0.3f || noiseMap[noiseMapValues.x, noiseMapValues.y] > 0.8f)
 			{
 				return false;
@@ -119,16 +120,20 @@ public class GridData
     }
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if (placedObjects.ContainsKey(gridPosition) == false)
+        if (placedObjects.ContainsKey(gridPosition*5) == false)
         {
+            foreach (var pair in placedObjects)
+            {
+                Debug.Log(pair.Key);
+            }
             return -1;
         }
-        return placedObjects[gridPosition].PlacedObjectIndex;
+        return placedObjects[gridPosition*5].PlacedObjectIndex;
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition)
     {
-        foreach (var pos in placedObjects[gridPosition].occupiedPositions)
+        foreach (var pos in placedObjects[gridPosition*5].occupiedPositions)
         {
             placedObjects.Remove(pos);
         }

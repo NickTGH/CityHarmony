@@ -70,7 +70,9 @@ public class MapGenerator : MonoBehaviour
 									//Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector2(x,y));
 									//bool validity = placementSystem.structureData.CanPlaceObjectAt(gridPosition, new Vector2Int(x, y), 4, noiseMap, mapWidth);
 									//if (validity)
-									//	placementSystem.structureData.AddObjectAt(gridPosition, new Vector2Int(1,2),4,index);
+									//{ 
+									//	placementSystem.structureData.AddObjectAt(gridPosition, new Vector2Int(1, 2), 4, index); 
+									//}
 								}
 							}
 							colorMap[y * mapWidth + x] = Color.Lerp(regions[i - 1].color, regions[i].color, currentHeight);
