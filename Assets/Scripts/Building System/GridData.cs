@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GridData
 {
-    Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    public Dictionary<Vector3Int, PlacementData> placedObjects = new();
    // public MapGenerator mapGenerator;
 
     public void AddObjectAt(Vector3Int gridPosition,Vector2Int objectSize, int ID, int placedObjectIndex)
@@ -30,7 +30,7 @@ public class GridData
         {
             for (int y = 0; y < objectSize.y; y++)
             {
-                returnValues.Add(gridPosition * 5 + new Vector3Int(x,y, 0));
+                returnValues.Add(gridPosition * 5 + new Vector3Int(x,y, 0)*5);
             }
         }
         return returnValues;
@@ -92,13 +92,12 @@ public class GridData
 				return false;
 			}
 			Vector2Int noiseMapValues = ConvertToNoiseMapValues(pos.x, pos.y,mapWidth);
-			//Debug.Log(noiseMap[noiseMapValues.x, noiseMapValues.y]);
 			if (noiseMap[noiseMapValues.x, noiseMapValues.y] < 0.3f || noiseMap[noiseMapValues.x, noiseMapValues.y] > 0.8f)
 			{
 				return false;
 			}
 		}
-		if (selectedIndex != 0)
+		if (selectedIndex != 0 && selectedIndex != 4)
 		{
 			return CalculateBuildingSurroundings(gridPosition, objectSize);
 		}
@@ -115,17 +114,12 @@ public class GridData
         float newY = ((oldY - oldMin)/oldRange) * (mapWidth - 1);
         newX = Mathf.Floor(Math.Abs(newX));
         newY = Mathf.Floor(Mathf.Abs(newY));
-        //Debug.Log(new Vector2Int((int)newX, (int)newY));
         return new Vector2Int((int)newX, (int)newY);
     }
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
         if (placedObjects.ContainsKey(gridPosition*5) == false)
         {
-            foreach (var pair in placedObjects)
-            {
-                Debug.Log(pair.Key);
-            }
             return -1;
         }
         return placedObjects[gridPosition*5].PlacedObjectIndex;

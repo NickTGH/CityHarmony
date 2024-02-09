@@ -62,17 +62,17 @@ public class MapGenerator : MonoBehaviour
 						{
 							if (regions[i].name == "HighLand" && spawnTrees)
 							{
-								int chanceOfTreeSpawn = random.Next(1000);
-								if (chanceOfTreeSpawn > 800)
+								int chanceOfTreeSpawn = random.Next(1001);
+								if (chanceOfTreeSpawn > 700 && y <= mapWidth-2)
 								{
 									//Add object to placedObjects
-									int index = objectPlacer.PlaceObstacle(treeObstacle, new Vector3(x - mapWidth*0.5f,y - mapHeight*0.5f,0) * 10);
-									//Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector2(x,y));
-									//bool validity = placementSystem.structureData.CanPlaceObjectAt(gridPosition, new Vector2Int(x, y), 4, noiseMap, mapWidth);
-									//if (validity)
-									//{ 
-									//	placementSystem.structureData.AddObjectAt(gridPosition, new Vector2Int(1, 2), 4, index); 
-									//}
+									Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector3(x - mapWidth * 0.5f, y - mapHeight * 0.5f, 0) * 10);
+									bool validity = placementSystem.structureData.CanPlaceObjectAt(gridPosition, new Vector2Int(2, 4), 4, noiseMap, mapWidth);
+									if (validity)
+									{
+										int index = objectPlacer.PlaceObstacle(treeObstacle, placementSystem.grid.CellToWorld(gridPosition));
+										placementSystem.structureData.AddObjectAt(gridPosition, new Vector2Int(2, 4), 4, index);
+									}
 								}
 							}
 							colorMap[y * mapWidth + x] = Color.Lerp(regions[i - 1].color, regions[i].color, currentHeight);

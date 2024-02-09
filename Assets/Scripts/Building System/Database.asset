@@ -30,6 +30,6 @@ MonoBehaviour:
     <ResourceCost>k__BackingField: 15
   - <Name>k__BackingField: Tree
     <ID>k__BackingField: 4
-    <Size>k__BackingField: {x: 1, y: 2}
+    <Size>k__BackingField: {x: 2, y: 4}
     <Prefab>k__BackingField: {fileID: 3211821642104755216, guid: db33c5d0f73985341ac8d9e73b563c53, type: 3}
     <ResourceCost>k__BackingField: 0
