@@ -17,15 +17,32 @@ public class MoveCamera : MonoBehaviour
 
     public bool IsInCameraMode;
 
+    public Vector2 minValues, maxValues;
+
     private void Start()
     {
+        camera.orthographicSize = defaultCamSize;
+        if (StaticValues.Size != 0)
+        {
+            minValues.x = -StaticValues.Size * 5 + (maxCamSize*1.75f);
+            minValues.y = -StaticValues.Size * 5 + maxCamSize;
+            maxValues.x = StaticValues.Size * 5 - (maxCamSize * 1.75f);
+            maxValues.y = StaticValues.Size * 5 - maxCamSize;
+        }
+        else
+        {
+            minValues.x = -1000 + maxCamSize * 1.78f;
+            minValues.y = -1000 + maxCamSize;
+            maxValues.x = 1000 - maxCamSize * 1.78f;
+            maxValues.y = 1000 - maxCamSize;
+        }
+
         if (defaultCamSize== 0)
         {
             defaultCamSize = minCamSize;
         }
         button = GameObject.Find("MoveCameraButton").GetComponent<Image>();
         IsInCameraMode = false;
-        camera.orthographicSize = defaultCamSize;
     }
     void Update()
     {
@@ -44,6 +61,7 @@ public class MoveCamera : MonoBehaviour
 
     private void PanCamera()
     {
+        Vector3 targetPosition = camera.transform.position;
         if(Input.GetMouseButtonDown(0))
         {
             dragOrigin=camera.ScreenToWorldPoint(Input.mousePosition);
@@ -52,29 +70,42 @@ public class MoveCamera : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 difference = dragOrigin - camera.ScreenToWorldPoint(Input.mousePosition);
-            camera.transform.position += difference;
+            targetPosition += difference;
+            Vector3 finalPosition = new Vector3(
+                Mathf.Clamp(targetPosition.x, minValues.x, maxValues.x),
+                Mathf.Clamp(targetPosition.y, minValues.y, maxValues.y),
+                camera.transform.position.z
+                );
+            camera.transform.position = finalPosition;
         }
     }
 
     private void PanCameraByArrowKeys()
     {
+        Vector3 targetPosition = camera.transform.position;
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            camera.transform.position += new Vector3(-100, 0, 0) * Time.deltaTime;
+            targetPosition += new Vector3(-100, 0, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            camera.transform.position += new Vector3(100, 0, 0) * Time.deltaTime;
+            targetPosition += new Vector3(100, 0, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            camera.transform.position += new Vector3(0, 100, 0) * Time.deltaTime;
+            targetPosition += new Vector3(0, 100, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            camera.transform.position += new Vector3(0, -100, 0) * Time.deltaTime;
+            targetPosition += new Vector3(0, -100, 0) * Time.deltaTime;
         }
-    }
+		Vector3 finalPosition = new Vector3(
+	        Mathf.Clamp(targetPosition.x, minValues.x, maxValues.x),
+	        Mathf.Clamp(targetPosition.y, minValues.y, maxValues.y),
+	        camera.transform.position.z
+	        );
+		camera.transform.position = finalPosition;
+	}
     private void ChangeZoom()
     {
         float newSize = camera.orthographicSize;

@@ -37,25 +37,48 @@ public class GridData
     }
     private bool CalculateBuildingSurroundings(Vector3Int gridPosition, Vector2Int buildingSize)
     {
-		List<Vector3Int> returnValues = new List<Vector3Int>();
-		for (int x = -1; x < buildingSize.x+1; x++)
-		{
-			for (int y = -1; y < buildingSize.y+1; y++)
-			{
-				returnValues.Add((gridPosition + new Vector3Int(x, y, 0))*5);
-			}
-		}
+        List<Vector3Int> returnValues = new List<Vector3Int>();
+        for (int x = -1; x < buildingSize.x + 1; x++)
+        {
+            for (int y = -1; y < buildingSize.y + 1; y++)
+            {
+                returnValues.Add((gridPosition + new Vector3Int(x, y, 0)) * 5);
+            }
+        }
         foreach (var pos in returnValues)
         {
             if (placedObjects.ContainsKey(pos))
             {
-				if (placedObjects[pos].ID == 1)
+                if (placedObjects[pos].ID == 1)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool CheckForTrees(Vector3Int gridPosition, Vector2Int buildingSize)
+    {
+		List<Vector3Int> returnValues = new List<Vector3Int>();
+		for (int x = -5; x < buildingSize.x + 5; x++)
+		{
+			for (int y = -5; y < buildingSize.y + 5; y++)
+			{
+				returnValues.Add((gridPosition + new Vector3Int(x, y, 0)) * 5);
+			}
+		}
+		foreach (var pos in returnValues)
+		{
+			if (placedObjects.ContainsKey(pos))
+			{
+				if (placedObjects[pos].ID == 4)
 				{
 					return true;
 				}
 			}
-        }
-        return false;
+		}
+		return false;
 	}
 
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex, MapGenerator mapGenerator)
@@ -78,6 +101,10 @@ public class GridData
         }
         if (selectedIndex != 0)
         {
+            if (selectedIndex == 4)
+            {
+                return CalculateBuildingSurroundings(gridPosition, objectSize) && CheckForTrees(gridPosition, objectSize);
+            }
             return CalculateBuildingSurroundings(gridPosition, objectSize);
 		}
         return true;

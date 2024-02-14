@@ -6,9 +6,16 @@ using UnityEngine;
 
 public class ObjectPlacer : MonoBehaviour
 {
-    [SerializeField]
-    public List<GameObject> placedGameObjects = new();
+    List<GameObject> placedGameObjects = new();
 
+    public void DestroyObjects()
+    {
+		foreach (var objectPlaced in placedGameObjects)
+		{
+			DestroyImmediate(objectPlaced);
+		}
+		placedGameObjects.Clear();
+	}
     public int PlaceObject(GameObject prefab, Vector3 position,ResourceManager resourceManager)
     {
         GameObject newObject = Instantiate(prefab);
@@ -20,7 +27,11 @@ public class ObjectPlacer : MonoBehaviour
         {
             newObject.GetComponentInChildren<HouseScript>()._resourceManager = resourceManager;
         }
-        newObject.transform.position = position;
+		if (newObject.GetComponentInChildren<SawmillScript>() != null)
+		{
+			newObject.GetComponentInChildren<SawmillScript>().resourceManager = resourceManager;
+		}
+		newObject.transform.position = position;
         placedGameObjects.Add(newObject);
         return placedGameObjects.Count - 1;
     }

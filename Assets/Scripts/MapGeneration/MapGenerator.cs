@@ -30,17 +30,24 @@ public class MapGenerator : MonoBehaviour
 	public GameObject treeObstacle;
 	System.Random random = new System.Random();
 
+	private void Awake()
+	{
+		if (StaticValues.Seed != 0)
+		{ seed = StaticValues.Seed; }
+		if (StaticValues.Size != 0)
+		{
+			mapHeight = StaticValues.Size;
+			mapWidth = StaticValues.Size;
+		}
+	}
+
 	private void Start()
 	{
 		GenerateMap();
 	}
 	public void GenerateMap()
 	{
-		foreach (var objectPlaced in objectPlacer.placedGameObjects)
-		{
-			DestroyImmediate(objectPlaced);
-		}
-		objectPlacer.placedGameObjects.Clear();
+		objectPlacer.DestroyObjects();
 
 		float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
 		Color[] colorMap = new Color[mapHeight * mapWidth];

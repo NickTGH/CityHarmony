@@ -33,3 +33,8 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 2, y: 4}
     <Prefab>k__BackingField: {fileID: 3211821642104755216, guid: db33c5d0f73985341ac8d9e73b563c53, type: 3}
     <ResourceCost>k__BackingField: 0
+  - <Name>k__BackingField: Sawmill
+    <ID>k__BackingField: 5
+    <Size>k__BackingField: {x: 4, y: 2}
+    <Prefab>k__BackingField: {fileID: 9174296132791576423, guid: fe9e13056e151094da714ecb75ffceb8, type: 3}
+    <ResourceCost>k__BackingField: 20

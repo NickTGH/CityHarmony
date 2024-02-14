@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,6 +29,13 @@ public class ResourceManager : MonoBehaviour
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI resourceText;
     public TextMeshProUGUI citizenText;
+    public GameObject gameOverScreen;
+
+	private void Awake()
+	{
+		gameOverScreen.SetActive(false);
+		Time.timeScale = 1.0f;
+	}
 	// Start is called before the first frame update
 	void Start()
     {
@@ -46,11 +54,15 @@ public class ResourceManager : MonoBehaviour
     private IEnumerator DecreaseResources()
     {
         yield return new WaitForSeconds(resourceDecreaseInterval);
-        FoodAmount -= CitizenAmount;
+        FoodAmount -= 5*CitizenAmount;
         if (FoodAmount < 0)
         {
             FoodAmount = 0;
 			CitizenAmount -= 1;
+            if (CitizenAmount == 0)
+            {
+                GameOver();
+            }
 		}
         StartCoroutine(DecreaseResources()  );
     }
@@ -65,9 +77,14 @@ public class ResourceManager : MonoBehaviour
     }
     public void IncreaseFoodAmount(int amount)
     {
-        FoodAmount += amount;
+        FoodAmount += (int)Math.Round(amount * (1+CitizenAmount * 0.5));
     }
-    public void IncreasePopulation(int people)
+	public void IncreaseResourceAmount(int amount)
+	{
+        Debug.Log("Increased");
+		BuildingResourceAmount += (int)Math.Round(amount * (1+CitizenAmount * 0.5));
+	}
+	public void IncreasePopulation(int people)
     {
         CitizenAmount += people;
     }
@@ -78,5 +95,10 @@ public class ResourceManager : MonoBehaviour
         resourceText.text = BuildingResourceAmount.ToString();
         citizenText.text = CitizenAmount.ToString();
     }
-    private void GameOver() { }
+    private void GameOver() 
+    {
+        //stop time; turn on gameOverScreen, block movement
+        Time.timeScale = 0;
+        gameOverScreen.SetActive(true);
+    }
 }

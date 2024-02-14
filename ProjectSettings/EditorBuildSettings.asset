@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/OptionsScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Testing Scenes/PlacementGridTestingScene.unity
+    path: Assets/Scenes/SeedGenerationScene.unity
+    guid: 34c39ba1caa1e844784c299e1d8210c6
+  - enabled: 1
+    path: Assets/Scenes/MainGame.unity
     guid: e269fb9bdcf88134f83d039272d38386
   m_configObjects: {}
