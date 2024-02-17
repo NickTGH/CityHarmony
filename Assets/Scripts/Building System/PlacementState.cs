@@ -14,6 +14,7 @@ public class PlacementState : IBuildingState
     ResourceManager resourceManager;
     ObjectPlacer objectPlacer;
     MapGenerator mapGenerator;
+    ParticleSystem[] particleEffects;
 
     public PlacementState(int iD,
                           Grid grid,
@@ -23,7 +24,8 @@ public class PlacementState : IBuildingState
                           GridData structureData,
                           ResourceManager resourceManager,
                           ObjectPlacer objectPlacer,
-                          MapGenerator mapGenerator)
+                          MapGenerator mapGenerator,
+                          ParticleSystem[] effects)
     {
         ID = iD;
         this.grid = grid;
@@ -34,6 +36,7 @@ public class PlacementState : IBuildingState
         this.resourceManager = resourceManager;
         this.objectPlacer = objectPlacer;
         this.mapGenerator = mapGenerator;
+        this.particleEffects = effects;
 
         selectedObjectIndex = database.objectsData.FindIndex(x => x.ID == ID);
         if (selectedObjectIndex > -1)
@@ -62,7 +65,10 @@ public class PlacementState : IBuildingState
             return;
         }
 
-        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition),resourceManager);
+        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex],
+											 grid.CellToWorld(gridPosition),
+											 resourceManager,
+                                             particleEffects);
         resourceManager.DecreaseResourcesAfterPlacement(database.objectsData[selectedObjectIndex].ResourceCost);
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : structureData;
         selectedData.AddObjectAt(gridPosition,

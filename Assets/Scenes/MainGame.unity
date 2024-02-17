@@ -1476,6 +1476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11c9112f0b0fa640a0565461bae7c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPlacer: {fileID: 701629102}
   FoodAmount: 0
   BuildingResourceAmount: 0
   CitizenAmount: 0
@@ -1485,7 +1486,7 @@ MonoBehaviour:
   resourceDecreaseInterval: 5
   MaxFoodAmount: 0
   MaxBuildingResourceAmount: 0
-  MaxCitizenAmount: 0
+  placedHouses: []
   foodText: {fileID: 225591846}
   resourceText: {fileID: 693117913}
   citizenText: {fileID: 1195626602}
@@ -1542,6 +1543,10 @@ MonoBehaviour:
   objectPlacer: {fileID: 701629102}
   resourceManager: {fileID: 395799792}
   mapGenerator: {fileID: 985726423}
+  particleEffects:
+  - {fileID: 7734655540197125035, guid: fc78266a1c1ae3d4a8f80db9ac233994, type: 3}
+  - {fileID: 4995897155854956862, guid: 0c74d6ca181ebe04b950803ad6623409, type: 3}
+  - {fileID: 3183324947862651543, guid: ed0fca255ea46044fa3243caed1454f8, type: 3}
 --- !u!1 &521433663
 GameObject:
   m_ObjectHideFlags: 0

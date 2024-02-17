@@ -7,7 +7,7 @@ public class SawmillScript : MonoBehaviour
 	[SerializeField]
 	public ResourceManager resourceManager;
 	[SerializeField]
-	private int resourceGain = 5;
+	private int resourceGain = 2;
 	[SerializeField]
 	private int cooldown = 5;
 	// Start is called before the first frame update

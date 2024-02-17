@@ -12,13 +12,15 @@ public class RemovingState : IBuildingState
     GridData structureData;
     ObjectPlacer objectPlacer;
     MapGenerator mapGenerator;
+    ParticleSystem[] particleEffects;
 
     public RemovingState(Grid grid,
                        PreviewSystem previewSystem,
                        GridData floorData,
                        GridData structureData,
                        ObjectPlacer objectPlacer,
-                       MapGenerator mapGenerator)
+                       MapGenerator mapGenerator,
+                       ParticleSystem[] effects)
     {
         this.grid = grid;
         this.previewSystem = previewSystem;
@@ -26,6 +28,7 @@ public class RemovingState : IBuildingState
         this.structureData = structureData;
         this.objectPlacer = objectPlacer;
         this.mapGenerator = mapGenerator;
+        particleEffects = effects;
 
         previewSystem.StartShowingRemovePreview();
     }
@@ -57,7 +60,7 @@ public class RemovingState : IBuildingState
             if (gameObjectIndex == -1)
                 return;
             selectedData.RemoveObjectAt(gridPosition);
-            objectPlacer.RemoveObjectAt(gameObjectIndex);
+            objectPlacer.RemoveObjectAt(gameObjectIndex, particleEffects[0]);
         }
         Vector3 cellPosition = grid.CellToWorld(gridPosition);
         previewSystem.UpdatePosition(cellPosition, CheckIfSelectionIsValid(gridPosition));

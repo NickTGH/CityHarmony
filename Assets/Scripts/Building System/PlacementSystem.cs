@@ -33,6 +33,10 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private MapGenerator mapGenerator;
 
+    [Space(20)]
+    [SerializeField]
+    private ParticleSystem[] particleEffects;
+
     IBuildingState buildingState;
 
     private void Awake()
@@ -54,7 +58,8 @@ public class PlacementSystem : MonoBehaviour
                                            structureData,
                                            resourceManager,
                                            objectPlacer,
-                                           mapGenerator);
+                                           mapGenerator,
+                                           particleEffects);
         if (ID == 1)
         {
             inputManager.OnHeld += PlaceStructure;
@@ -75,7 +80,8 @@ public class PlacementSystem : MonoBehaviour
                                           floorData,
                                           structureData,
                                           objectPlacer,
-                                          mapGenerator);
+                                          mapGenerator,
+                                          particleEffects);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnHeld += PlaceStructure;
         inputManager.OnExit += StopPlacement;
