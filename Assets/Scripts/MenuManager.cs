@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource exitToMenuSfx;
     public void LoadScene(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
@@ -15,6 +17,7 @@ public class MenuManager : MonoBehaviour
     }
     public void ReturnToMainMenu()
     {
+        exitToMenuSfx.Play();
         SceneManager.LoadScene(0);
     }
     public void Quit()

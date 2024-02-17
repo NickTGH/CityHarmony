@@ -19,6 +19,9 @@ public class MoveCamera : MonoBehaviour
 
     public Vector2 minValues, maxValues;
 
+    [SerializeField]
+    private AudioSource enterCameraModeSfx;
+
     private void Start()
     {
         camera.orthographicSize = defaultCamSize;
@@ -140,5 +143,6 @@ public class MoveCamera : MonoBehaviour
         {
             IsInCameraMode= true;
         }
+        enterCameraModeSfx.Play();
     }
 }

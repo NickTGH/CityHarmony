@@ -37,7 +37,17 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private ParticleSystem[] particleEffects;
 
-    IBuildingState buildingState;
+    [Space(40)]
+    [SerializeField]
+    private AudioSource enterStateSfx;
+	[SerializeField]
+	private AudioSource placeSfx;
+	[SerializeField]
+	private AudioSource destroySfx;
+    [SerializeField]
+    private AudioSource failedSfx;
+
+	IBuildingState buildingState;
 
     private void Awake()
     {
@@ -50,6 +60,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
+        enterStateSfx.Play();
         buildingState = new PlacementState(ID,
                                            grid,
                                            preview,
@@ -59,7 +70,8 @@ public class PlacementSystem : MonoBehaviour
                                            resourceManager,
                                            objectPlacer,
                                            mapGenerator,
-                                           particleEffects);
+                                           particleEffects,
+                                           failedSfx);
         if (ID == 1)
         {
             inputManager.OnHeld += PlaceStructure;
@@ -74,6 +86,7 @@ public class PlacementSystem : MonoBehaviour
     public void StartRemoving()
     {
         StopPlacement();
+        enterStateSfx.Play();
         gridVisualization.SetActive(true);
         buildingState = new RemovingState(grid,
                                           preview,
@@ -81,7 +94,8 @@ public class PlacementSystem : MonoBehaviour
                                           structureData,
                                           objectPlacer,
                                           mapGenerator,
-                                          particleEffects);
+                                          particleEffects,
+                                          failedSfx);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnHeld += PlaceStructure;
         inputManager.OnExit += StopPlacement;
@@ -98,6 +112,7 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
+        placeSfx.Play();
     }
 
     public void StopPlacement()

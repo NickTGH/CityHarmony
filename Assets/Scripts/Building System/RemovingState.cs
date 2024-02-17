@@ -13,6 +13,7 @@ public class RemovingState : IBuildingState
     ObjectPlacer objectPlacer;
     MapGenerator mapGenerator;
     ParticleSystem[] particleEffects;
+    AudioSource failedSfx;
 
     public RemovingState(Grid grid,
                        PreviewSystem previewSystem,
@@ -20,7 +21,8 @@ public class RemovingState : IBuildingState
                        GridData structureData,
                        ObjectPlacer objectPlacer,
                        MapGenerator mapGenerator,
-                       ParticleSystem[] effects)
+                       ParticleSystem[] effects,
+                       AudioSource sfx)
     {
         this.grid = grid;
         this.previewSystem = previewSystem;
@@ -28,7 +30,8 @@ public class RemovingState : IBuildingState
         this.structureData = structureData;
         this.objectPlacer = objectPlacer;
         this.mapGenerator = mapGenerator;
-        particleEffects = effects;
+        this.particleEffects = effects;
+        this.failedSfx = sfx;
 
         previewSystem.StartShowingRemovePreview();
     }
@@ -52,7 +55,7 @@ public class RemovingState : IBuildingState
 
         if(selectedData == null)
         {
-            //sound
+            failedSfx.Play();
         }
         else
         {
