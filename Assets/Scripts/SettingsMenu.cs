@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -25,8 +26,8 @@ public class SettingsMenu : MonoBehaviour
 			string option = resolutions[i].width + "x" + resolutions[i].height;
 			options.Add(option);
 
-			if (resolutions[i].width == Screen.currentResolution.width &&
-				resolutions[i].height == Screen.currentResolution.height)
+			if (resolutions[i].width == Screen.width &&
+				resolutions[i].height == Screen.height)
 			{
 				currentResolutionIndex = i;
 			}
@@ -44,7 +45,7 @@ public class SettingsMenu : MonoBehaviour
 	}
 	public void SetVolume(float volume)
 	{
-		audioMixer.SetFloat("volume", volume);
+		audioMixer.SetFloat("volume", Mathf.Log10(volume)*20);
 	}
 	public void SetQuality(int qualityIndex)
 	{
