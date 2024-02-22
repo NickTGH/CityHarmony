@@ -15,7 +15,7 @@ public class PlacementState : IBuildingState
     ObjectPlacer objectPlacer;
     MapGenerator mapGenerator;
     ParticleSystem[] particleEffects;
-    AudioSource failedSfx;
+    AudioManager audioManager;
 
     public PlacementState(int iD,
                           Grid grid,
@@ -27,7 +27,7 @@ public class PlacementState : IBuildingState
                           ObjectPlacer objectPlacer,
                           MapGenerator mapGenerator,
                           ParticleSystem[] effects,
-                          AudioSource sfx)
+                          AudioManager sfx)
     {
         ID = iD;
         this.grid = grid;
@@ -39,7 +39,7 @@ public class PlacementState : IBuildingState
         this.objectPlacer = objectPlacer;
         this.mapGenerator = mapGenerator;
         this.particleEffects = effects;
-        this.failedSfx = sfx;
+        this.audioManager = sfx;
 
         selectedObjectIndex = database.objectsData.FindIndex(x => x.ID == ID);
         if (selectedObjectIndex > -1)
@@ -65,7 +65,7 @@ public class PlacementState : IBuildingState
 								 && resourceManager.CanAffordStructure(database.objectsData[selectedObjectIndex].ResourceCost);
         if (placementValidity == false)
         {
-            failedSfx.Play();
+            audioManager.PlayFailedToRemoveSfx();
             return;
         }
 

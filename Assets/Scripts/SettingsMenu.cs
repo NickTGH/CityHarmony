@@ -12,6 +12,11 @@ public class SettingsMenu : MonoBehaviour
 	Resolution[] resolutions;
 
 	public TMP_Dropdown resolutionDropdown;
+	public TMP_Dropdown graphicsDropdown;
+	public Toggle fullscreenToggle;
+	public Slider masterVolumeSlider;
+	public Slider musicVolumeSlider;
+	public Slider sfxVolumeSlider;
 	private void Start()
 	{
 		resolutions = Screen.resolutions;
@@ -36,6 +41,15 @@ public class SettingsMenu : MonoBehaviour
 		resolutionDropdown.AddOptions(options);
 		resolutionDropdown.value = currentResolutionIndex;
 		resolutionDropdown.RefreshShownValue();
+
+		fullscreenToggle.isOn = StaticValues.IsFullscreen;
+
+		graphicsDropdown.value = StaticValues.QualityIndex;
+		graphicsDropdown.RefreshShownValue();
+
+		masterVolumeSlider.value = StaticValues.VolumeLevel;
+		musicVolumeSlider.value = StaticValues.MusicLevel;
+		sfxVolumeSlider.value = StaticValues.SfxLevel;
 	}
 
 	public void SetResolution(int resolutionIndex)
@@ -45,14 +59,27 @@ public class SettingsMenu : MonoBehaviour
 	}
 	public void SetVolume(float volume)
 	{
-		audioMixer.SetFloat("volume", Mathf.Log10(volume)*20);
+		audioMixer.SetFloat("masterVolume", Mathf.Log10(volume)*20);
+		StaticValues.VolumeLevel = volume;
 	}
-	public void SetQuality(int qualityIndex)
+    public void SetMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("musicVolume", Mathf.Log10(volume) * 20);
+		StaticValues.MusicLevel = volume;
+    }
+    public void SetSfxVolume(float volume)
+    {
+        audioMixer.SetFloat("sfxVolume", Mathf.Log10(volume) * 20);
+		StaticValues.SfxLevel = volume;
+    }
+    public void SetQuality(int qualityIndex)
 	{
 		QualitySettings.SetQualityLevel(qualityIndex);
+		StaticValues.QualityIndex = qualityIndex;
 	}
 	public void SetFullscreen(bool isFullscreen)
 	{
 		Screen.fullScreen = isFullscreen;
+		StaticValues.IsFullscreen = isFullscreen;
 	}
 }

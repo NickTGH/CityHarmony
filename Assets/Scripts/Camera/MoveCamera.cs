@@ -20,7 +20,7 @@ public class MoveCamera : MonoBehaviour
     public Vector2 minValues, maxValues;
 
     [SerializeField]
-    private AudioSource enterCameraModeSfx;
+    private AudioManager audioManager;
 
     private void Start()
     {
@@ -44,11 +44,16 @@ public class MoveCamera : MonoBehaviour
         {
             defaultCamSize = minCamSize;
         }
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         button = GameObject.Find("MoveCameraButton").GetComponent<Image>();
         IsInCameraMode = false;
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ToggleCameraMode();
+        }
         if (IsInCameraMode)
         {
             PanCamera();
@@ -143,6 +148,6 @@ public class MoveCamera : MonoBehaviour
         {
             IsInCameraMode= true;
         }
-        enterCameraModeSfx.Play();
+        audioManager.PlayActivateCameraSfx();
     }
 }

@@ -66,7 +66,6 @@ public class ResourceManager : MonoBehaviour
 		if (FoodAmount < 0)
 		{
 			FoodAmount = 0;
-			Debug.Log(placedHouses.Count);
 			if (placedHouses.Count == 0)
 			{
 				CitizenAmount -= 1;

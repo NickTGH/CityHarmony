@@ -5,18 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField]
-    private AudioSource exitToMenuSfx;
     private bool isPaused = false;
     [SerializeField]
     private GameObject pauseMenu;
+
+
     [SerializeField]
-    private AudioSource music;
-    [SerializeField]
-    private AudioSource selectButton;
-    public void LoadScene(int sceneIndex)
+    private AudioManager audioManager;
+
+	private void Start()
+	{
+		audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.PlayGameTheme();
+	}
+	public void LoadScene(int sceneIndex)
     {
-        selectButton.Play();
+        audioManager.PlaySelectButtonSfx();
         SceneManager.LoadScene(sceneIndex);
     }
     public void ReloadScene()
@@ -27,16 +31,16 @@ public class MenuManager : MonoBehaviour
     {
         if (!isPaused)
         {
-			exitToMenuSfx.Play();
-			music.Pause();
+			audioManager.PlayReturnToMenuSfx();
+			audioManager.PauseGameTheme();
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
             isPaused = true;
         }
         else
         {
-			exitToMenuSfx.Play();
-			music.Play();
+            audioManager.PlayReturnToMenuSfx(); 
+            audioManager.PauseGameTheme();
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             isPaused = false;
@@ -45,10 +49,12 @@ public class MenuManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
+        audioManager.PlayReturnToMenuSfx();
         SceneManager.LoadScene(0);
     }
     public void Quit()
     {
+        audioManager.PlaySelectButtonSfx();
         Application.Quit();
     }
 }

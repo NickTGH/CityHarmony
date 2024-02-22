@@ -38,14 +38,7 @@ public class PlacementSystem : MonoBehaviour
     private ParticleSystem[] particleEffects;
 
     [Space(40)]
-    [SerializeField]
-    private AudioSource enterStateSfx;
-	[SerializeField]
-	private AudioSource placeSfx;
-	[SerializeField]
-	private AudioSource destroySfx;
-    [SerializeField]
-    private AudioSource failedSfx;
+    private AudioManager audioManager;
 
 	IBuildingState buildingState;
 
@@ -54,13 +47,14 @@ public class PlacementSystem : MonoBehaviour
         StopPlacement();
         floorData = new();
         structureData = new();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void StartPlacement(int ID)
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        enterStateSfx.Play();
+        audioManager.PlayEnterStateSfx();
         buildingState = new PlacementState(ID,
                                            grid,
                                            preview,
@@ -71,7 +65,7 @@ public class PlacementSystem : MonoBehaviour
                                            objectPlacer,
                                            mapGenerator,
                                            particleEffects,
-                                           failedSfx);
+                                           audioManager);
         if (ID == 1)
         {
             inputManager.OnHeld += PlaceStructure;
@@ -86,7 +80,7 @@ public class PlacementSystem : MonoBehaviour
     public void StartRemoving()
     {
         StopPlacement();
-        enterStateSfx.Play();
+        audioManager.PlayEnterStateSfx();
         gridVisualization.SetActive(true);
         buildingState = new RemovingState(grid,
                                           preview,
@@ -95,7 +89,7 @@ public class PlacementSystem : MonoBehaviour
                                           objectPlacer,
                                           mapGenerator,
                                           particleEffects,
-                                          failedSfx);
+                                          audioManager);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnHeld += PlaceStructure;
         inputManager.OnExit += StopPlacement;
@@ -112,7 +106,7 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
-        placeSfx.Play();
+        audioManager.PlayPlaceSfx();
     }
 
     public void StopPlacement()
@@ -129,17 +123,39 @@ public class PlacementSystem : MonoBehaviour
     }
     private void Update()
     {
-       if(buildingState==null)
-       {
-           return;
-       }
-        Vector2 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-
-        if(lastDetectedPosition != gridPosition)
+        if(buildingState==null)
         {
-            buildingState.UpdateState(gridPosition);
-            lastDetectedPosition = gridPosition;
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                StartPlacement(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                StartPlacement(2);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                StartPlacement(5);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                StartPlacement(3);
+            }
+            if(Input.GetKeyDown(KeyCode.D))
+            {
+                StartRemoving();
+            }
+        }
+        else
+        {
+            Vector2 mousePosition = inputManager.GetSelectedMapPosition();
+            Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+
+            if (lastDetectedPosition != gridPosition)
+            {
+                buildingState.UpdateState(gridPosition);
+                lastDetectedPosition = gridPosition;
+            }
         }
     }
 }
