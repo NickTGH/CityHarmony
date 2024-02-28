@@ -123,28 +123,29 @@ public class PlacementSystem : MonoBehaviour
     }
     private void Update()
     {
-        if(buildingState==null)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                StartPlacement(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                StartPlacement(2);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                StartPlacement(5);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                StartPlacement(3);
-            }
-            if(Input.GetKeyDown(KeyCode.D))
-            {
-                StartRemoving();
-            }
+            StartPlacement(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StartPlacement(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            StartPlacement(5);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            StartPlacement(3);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            StartRemoving();
+        }
+        if (buildingState==null)
+        {
+            return;
         }
         else
         {
