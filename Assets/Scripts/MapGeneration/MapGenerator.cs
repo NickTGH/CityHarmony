@@ -67,21 +67,7 @@ public class MapGenerator : MonoBehaviour
 						}
 						else
 						{
-							if (regions[i].name == "HighLand" && spawnTrees)
-							{
-								int chanceOfTreeSpawn = random.Next(1001);
-								if (chanceOfTreeSpawn > 700 && y <= mapWidth-2)
-								{
-									//Add object to placedObjects
-									Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector3(x - mapWidth * 0.5f, y - mapHeight * 0.5f, 0) * 10);
-									bool validity = placementSystem.structureData.CanPlaceObjectAt(gridPosition, new Vector2Int(2, 4), 4, noiseMap, mapWidth);
-									if (validity)
-									{
-										int index = objectPlacer.PlaceObstacle(treeObstacle, placementSystem.grid.CellToWorld(gridPosition));
-										placementSystem.structureData.AddObjectAt(gridPosition, new Vector2Int(2, 4), 4, index);
-									}
-								}
-							}
+							SpawnTrees(noiseMap, i, x, y);
 							colorMap[y * mapWidth + x] = Color.Lerp(regions[i - 1].color, regions[i].color, currentHeight);
 						}
 						break;
@@ -98,6 +84,25 @@ public class MapGenerator : MonoBehaviour
 		else if (drawMode == DrawMode.ColorMap)
 		{
 			display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
+		}
+	}
+
+	private void SpawnTrees(float[,] noiseMap, int i, int x, int y)
+	{
+		if (regions[i].name == "HighLand" && spawnTrees)
+		{
+			int chanceOfTreeSpawn = random.Next(1001);
+			if (chanceOfTreeSpawn > 700 && y <= mapWidth - 2)
+			{
+				//Add object to placedObjects
+				Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector3(x - mapWidth * 0.5f, y - mapHeight * 0.5f, 0) * 10);
+				bool validity = placementSystem.structureData.CanPlaceObjectAt(gridPosition, new Vector2Int(2, 4), 4, noiseMap, mapWidth);
+				if (validity)
+				{
+					int index = objectPlacer.PlaceObstacle(treeObstacle, placementSystem.grid.CellToWorld(gridPosition));
+					placementSystem.structureData.AddObjectAt(gridPosition, new Vector2Int(2, 4), 4, index);
+				}
+			}
 		}
 	}
 	private void OnValidate()

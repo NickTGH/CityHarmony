@@ -8,6 +8,8 @@ public class ResourceManager : MonoBehaviour
 {
 	[SerializeField]
 	private ObjectPlacer objectPlacer;
+	[SerializeField]
+	private PlacementSystem placementSystem;
 	public int FoodAmount;
 	public int BuildingResourceAmount;
 	public int CitizenAmount;
@@ -136,7 +138,19 @@ public class ResourceManager : MonoBehaviour
 		CitizenAmount -= 1;
 		if (houseScript.residents == 0)
 		{
-			objectPlacer.DestroyObject(placedHouses[index]);
+			placementSystem.buildingState2 = new RemovingState(placementSystem.grid,
+				placementSystem.preview,
+				placementSystem.floorData,
+				placementSystem.structureData,
+				placementSystem.objectPlacer,
+				placementSystem.mapGenerator,
+				placementSystem.particleEffects);
+            Vector2 mousePosition = placedHouses[index].transform.position;
+            Vector3Int gridPosition = placementSystem.grid.WorldToCell(mousePosition);
+
+            placementSystem.buildingState2.OnAction(gridPosition);
+			placementSystem.buildingState2 = null;
+           // objectPlacer.DestroyObject(placedHouses[index]);
 		}
 	}
 	private void GameOver()

@@ -36,6 +36,23 @@ public class RemovingState : IBuildingState
         previewSystem.StartShowingRemovePreview();
     }
 
+    public RemovingState(Grid grid,
+                       PreviewSystem previewSystem,
+                       GridData floorData,
+                       GridData structureData,
+                       ObjectPlacer objectPlacer,
+                       MapGenerator mapGenerator,
+                       ParticleSystem[] effects)
+    {
+        this.grid = grid;
+        this.previewSystem = previewSystem;
+        this.floorData = floorData;
+        this.structureData = structureData;
+        this.objectPlacer = objectPlacer;
+        this.mapGenerator= mapGenerator;
+        this.particleEffects = effects;
+    }
+
     public void EndState()
     {
         previewSystem.StopShowingPreview();
@@ -65,8 +82,11 @@ public class RemovingState : IBuildingState
             selectedData.RemoveObjectAt(gridPosition);
             objectPlacer.RemoveObjectAt(gameObjectIndex, particleEffects[0]);
         }
-        Vector3 cellPosition = grid.CellToWorld(gridPosition);
-        previewSystem.UpdatePosition(cellPosition, CheckIfSelectionIsValid(gridPosition));
+        if (audioManager != null)
+        {
+            Vector3 cellPosition = grid.CellToWorld(gridPosition);
+            previewSystem.UpdatePosition(cellPosition, CheckIfSelectionIsValid(gridPosition));
+        }
     }
 
     private bool CheckIfSelectionIsValid(Vector3Int gridPosition)

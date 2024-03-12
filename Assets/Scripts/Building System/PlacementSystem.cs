@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlacementSystem : MonoBehaviour
 {
     [SerializeField]
-    private InputManager inputManager;
+    public InputManager inputManager;
     [SerializeField]
     public Grid grid;
 
@@ -20,27 +20,28 @@ public class PlacementSystem : MonoBehaviour
     public GridData floorData, structureData;
 
     [SerializeField]
-    private PreviewSystem preview;
+    public PreviewSystem preview;
 
     private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
     [SerializeField]
-    private ObjectPlacer objectPlacer;
+    public ObjectPlacer objectPlacer;
 
     [SerializeField]
     private ResourceManager resourceManager;
 
     [SerializeField]
-    private MapGenerator mapGenerator;
+    public MapGenerator mapGenerator;
 
     [Space(20)]
     [SerializeField]
-    private ParticleSystem[] particleEffects;
+    public ParticleSystem[] particleEffects;
 
     [Space(40)]
     private AudioManager audioManager;
 
-	IBuildingState buildingState;
+	public IBuildingState buildingState;
+    public IBuildingState buildingState2;
 
     private void Awake()
     {
