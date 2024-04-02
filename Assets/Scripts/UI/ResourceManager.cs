@@ -129,10 +129,6 @@ public class ResourceManager : MonoBehaviour
 	{
 		System.Random rnd = new();
 		int index = rnd.Next(placedHouses.Count);
-		//if (placedHouses[index] == null)
-		//{
-		//	return;
-		//}
 		HouseScript houseScript = placedHouses[index].GetComponentInChildren<HouseScript>();
 		houseScript.residents -= 1;
 		CitizenAmount -= 1;
@@ -158,5 +154,10 @@ public class ResourceManager : MonoBehaviour
 		//stop time; turn on gameOverScreen, block movement
 		Time.timeScale = 0;
 		gameOverScreen.SetActive(true);
+	}
+
+	public void IncreaseMaxFood(int amount)
+	{
+		MaxFoodAmount += amount;
 	}
 }

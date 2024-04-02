@@ -84,8 +84,8 @@ public class GridData
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex, MapGenerator mapGenerator)
     {
         float[,] noiseMap = Noise.GenerateNoiseMap(mapGenerator.mapWidth, mapGenerator.mapHeight, mapGenerator.seed,mapGenerator.noiseScale,mapGenerator.octaves, mapGenerator.persistance, mapGenerator.lacunarity, mapGenerator.offset);
+        float[,] lightMap = mapGenerator.ReturnLightLevels();
         List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition, objectSize);
-        //Debug.Log(gridPosition);
         foreach (var pos in positionToOccupy)
         {
             if (placedObjects.ContainsKey(pos))
@@ -93,8 +93,11 @@ public class GridData
                 return false;
             }
 			Vector2Int noiseMapValues = ConvertToNoiseMapValues(pos.x, pos.y, mapGenerator.mapWidth);
-            //Debug.Log(noiseMap[noiseMapValues.x, noiseMapValues.y]);
 			if (noiseMap[noiseMapValues.x,noiseMapValues.y] < 0.33f || noiseMap[noiseMapValues.x,noiseMapValues.y] > 0.78f)
+            {
+                return false;
+            }
+            if (lightMap[noiseMapValues.x,noiseMapValues.y] < 10f || lightMap[noiseMapValues.x,noiseMapValues.y] > 90f)
             {
                 return false;
             }
@@ -109,6 +112,9 @@ public class GridData
 		}
         return true;
     }
+    
+    //--------------------------------------------
+    //For trees only!!!
 	public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex, float[,]noiseMap,int mapWidth)
 	{
 		List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition, objectSize);

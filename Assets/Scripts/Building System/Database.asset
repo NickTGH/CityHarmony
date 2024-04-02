@@ -38,3 +38,18 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 4, y: 2}
     <Prefab>k__BackingField: {fileID: 9174296132791576423, guid: fe9e13056e151094da714ecb75ffceb8, type: 3}
     <ResourceCost>k__BackingField: 20
+  - <Name>k__BackingField: Lamp
+    <ID>k__BackingField: 6
+    <Size>k__BackingField: {x: 1, y: 4}
+    <Prefab>k__BackingField: {fileID: 6682737320689040472, guid: ee4bfefe90bae8b4ebf3fdef77b949dc, type: 3}
+    <ResourceCost>k__BackingField: 5
+  - <Name>k__BackingField: Silo
+    <ID>k__BackingField: 7
+    <Size>k__BackingField: {x: 2, y: 4}
+    <Prefab>k__BackingField: {fileID: 7104533488367558582, guid: 010d6dc761f07ce429e79b29a7e25d67, type: 3}
+    <ResourceCost>k__BackingField: 70
+  - <Name>k__BackingField: Barn
+    <ID>k__BackingField: 8
+    <Size>k__BackingField: {x: 4, y: 4}
+    <Prefab>k__BackingField: {fileID: 4405717108563728539, guid: c5bbd44c6198e2b4291069d4b903ff1b, type: 3}
+    <ResourceCost>k__BackingField: 70

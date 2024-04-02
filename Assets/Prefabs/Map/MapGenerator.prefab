@@ -46,15 +46,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawMode: 1
-  mapWidth: 275
-  mapHeight: 275
+  mapWidth: 200
+  mapHeight: 200
   noiseScale: 39
   octaves: 2
   persistance: 0.452
   lacunarity: 1
   seed: 6755485
   offset: {x: 4.5, y: 1}
-  autoUpdate: 1
+  autoUpdate: 0
+  spawnTrees: 1
+  useWeather: 0
   regions:
   - name: DeepWater
     height: 0.16
@@ -83,6 +85,12 @@ MonoBehaviour:
   - name: Snow
     height: 1
     color: {r: 1, g: 1, b: 1, a: 0}
+  lightCycle: {fileID: 0}
+  placementSystem: {fileID: 0}
+  objectPlacer: {fileID: 0}
+  treeObstacle: {fileID: 3211821642104755216, guid: db33c5d0f73985341ac8d9e73b563c53, type: 3}
+  snowParticles: {fileID: 4847134250823810762, guid: b4bedea32c96d0a4c903697df2c88ba4, type: 3}
+  rainParticles: {fileID: 3390012838514356280, guid: 784b28768eb916e4ab292aa6145d01ba, type: 3}
 --- !u!114 &3523247278439537340
 MonoBehaviour:
   m_ObjectHideFlags: 0

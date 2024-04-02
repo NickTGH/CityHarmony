@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class HouseScript : MonoBehaviour
+public class HouseScript : ConstructScript
 {
-    public ResourceManager _resourceManager;
+    private ResourceManager _resourceManager;
     [SerializeField]
     private Light2D houseLight;
 
@@ -14,6 +14,7 @@ public class HouseScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _resourceManager = base.resourceManager;
         houseLight.intensity = 1;
     }
 

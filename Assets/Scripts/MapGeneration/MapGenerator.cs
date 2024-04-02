@@ -22,12 +22,21 @@ public class MapGenerator : MonoBehaviour
 
 	public bool autoUpdate;
 	public bool spawnTrees;
+	public bool useWeather;
 
 	public TerrainType[] regions;
 
+
+	private float[,] lightLevels;
+
+	public DayNightCycle lightCycle;
 	public PlacementSystem placementSystem;
 	public ObjectPlacer objectPlacer;
+
 	public GameObject treeObstacle;
+	public GameObject snowParticles;
+	public GameObject rainParticles;
+
 	System.Random random = new System.Random();
 
 	private void Awake()
@@ -39,13 +48,46 @@ public class MapGenerator : MonoBehaviour
 			mapHeight = StaticValues.Size;
 			mapWidth = StaticValues.Size;
 		}
+		lightCycle = GameObject.Find("Sun").GetComponent<DayNightCycle>();
 	}
 
 	private void Start()
 	{
+		lightLevels = new float[mapWidth, mapHeight];
 		GenerateMap();
 	}
-	public void GenerateMap()
+    private void FixedUpdate()
+    {
+        UpdateLightLevels();
+    }
+
+	public void UpdateLightLevels()
+	{
+		for (int y = 0; y < mapHeight; y++)
+		{
+			for (int x = 0; x < mapWidth; x++)
+			{
+				//Only set light level if the light difference is small enough
+				float currentLightLevel = lightCycle.GetLightLevel();
+				if (currentLightLevel < 50)
+				{
+                    if (lightLevels[x, y] - 5 < currentLightLevel)
+                    {
+                        lightLevels[x, y] = lightCycle.GetLightLevel();
+                    }
+                }
+				else
+				{
+                    if (lightLevels[x, y] + 5 > currentLightLevel)
+                    {
+                        lightLevels[x, y] = lightCycle.GetLightLevel();
+						continue;
+                    }
+                }
+            }
+		}
+	}
+    public void GenerateMap()
 	{
 		objectPlacer.DestroyObjects();
 
@@ -56,6 +98,7 @@ public class MapGenerator : MonoBehaviour
 			for (int x = 0; x < mapWidth; x++)
 			{
 				float currentHeight = noiseMap[x, y];
+				lightLevels[x, y] = lightCycle.GetLightLevel();
 				for (int i = 0; i < regions.Length; i++)
 				{
 
@@ -67,7 +110,8 @@ public class MapGenerator : MonoBehaviour
 						}
 						else
 						{
-							SpawnTrees(noiseMap, i, x, y);
+                            SpawnWeather(noiseMap, i, x, y);
+                            SpawnTrees(noiseMap, i, x, y);
 							colorMap[y * mapWidth + x] = Color.Lerp(regions[i - 1].color, regions[i].color, currentHeight);
 						}
 						break;
@@ -75,7 +119,7 @@ public class MapGenerator : MonoBehaviour
 				}
 			}
 		}
-
+		
 		MapDisplay display = FindObjectOfType<MapDisplay>();
 		if (drawMode == DrawMode.NoiseMap)
 		{
@@ -104,6 +148,32 @@ public class MapGenerator : MonoBehaviour
 				}
 			}
 		}
+	}
+    private void SpawnWeather(float[,] noiseMap, int i, int x, int y)
+    {
+        if (regions[i].name == "Snow" && useWeather)
+        {
+            if (y <= mapWidth - 2)
+            {
+                //Add object to placedObjects
+                Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector3(x - mapWidth * 0.5f, y - mapHeight * 0.5f, 0) * 10);
+                int index = objectPlacer.PlaceObstacle(snowParticles, placementSystem.grid.CellToWorld(new Vector3Int(gridPosition.x,gridPosition.y+2,gridPosition.z)));
+            }
+        }
+		else if (useWeather)
+		{
+			if (y <= mapWidth - 2)
+			{
+				//Add object to placedObjects
+				Vector3Int gridPosition = placementSystem.grid.WorldToCell(new Vector3(x - mapWidth * 0.5f, y - mapHeight * 0.5f, 0) * 10);
+                int index = objectPlacer.PlaceObstacle(rainParticles, placementSystem.grid.CellToWorld(new Vector3Int(gridPosition.x,gridPosition.y+2,gridPosition.z)));
+			}
+		}
+	}
+
+    public float[,] ReturnLightLevels()
+	{
+		return lightLevels;
 	}
 	private void OnValidate()
 	{

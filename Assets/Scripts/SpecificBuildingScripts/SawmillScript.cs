@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SawmillScript : MonoBehaviour
+public class SawmillScript : ConstructScript
 {
-	[SerializeField]
-	public ResourceManager resourceManager;
+	private ResourceManager _resourceManager;
 	[SerializeField]
 	private int resourceGain = 2;
 	[SerializeField]
@@ -13,7 +12,8 @@ public class SawmillScript : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		if (resourceManager == null)
+		_resourceManager = base.resourceManager;
+		if (_resourceManager == null)
 			return;
 		StartCoroutine(YieldWood());
 	}
@@ -25,7 +25,7 @@ public class SawmillScript : MonoBehaviour
 	}
 	private IEnumerator YieldWood()
 	{
-		resourceManager.IncreaseResourceAmount(resourceGain);
+		_resourceManager.IncreaseResourceAmount(resourceGain);
 		yield return new WaitForSeconds(cooldown);
 		StartCoroutine(YieldWood());
 	}

@@ -27,19 +27,10 @@ public class ObjectPlacer : MonoBehaviour
     public int PlaceObject(ObjectData item, Vector3 position,ResourceManager resourceManager, ParticleSystem[] effects)
     {
         GameObject newObject = Instantiate(item.Prefab);
-        if (newObject.GetComponentInChildren<FieldScript>() != null)
+        if (newObject.GetComponentInChildren<ConstructScript>() != null)
         {
-            newObject.GetComponentInChildren<FieldScript>().resourceManager = resourceManager;
+            newObject.GetComponentInChildren<ConstructScript>().resourceManager = resourceManager;
         }
-        if (newObject.GetComponentInChildren<HouseScript>() != null)
-        {
-            newObject.GetComponentInChildren<HouseScript>()._resourceManager = resourceManager;
-            placedHouses.Add(newObject);
-        }
-		if (newObject.GetComponentInChildren<SawmillScript>() != null)
-		{
-			newObject.GetComponentInChildren<SawmillScript>().resourceManager = resourceManager;
-		}
 		newObject.transform.position = position;
         placedGameObjects.Add(newObject);
         int itemSize = item.Size.x;

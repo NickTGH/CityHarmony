@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FieldScript : MonoBehaviour
+public class FieldScript : ConstructScript
 {
-    [SerializeField]
-    public ResourceManager resourceManager;
+    private ResourceManager _resourceManager;
     [SerializeField]
     private int cropGain = 3;
     [SerializeField]
@@ -13,6 +12,7 @@ public class FieldScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _resourceManager = base.resourceManager;
         if (resourceManager == null)
             return;
         StartCoroutine(YieldCrops());
@@ -25,7 +25,7 @@ public class FieldScript : MonoBehaviour
     }
     private IEnumerator YieldCrops()
     {
-        resourceManager.IncreaseFoodAmount(cropGain);
+        _resourceManager.IncreaseFoodAmount(cropGain);
         yield return new WaitForSeconds(cooldown);
         StartCoroutine(YieldCrops());
     }
