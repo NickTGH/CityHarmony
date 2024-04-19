@@ -7,7 +7,6 @@ using UnityEngine;
 public class GridData
 {
     public Dictionary<Vector3Int, PlacementData> placedObjects = new();
-   // public MapGenerator mapGenerator;
 
     public void AddObjectAt(Vector3Int gridPosition,Vector2Int objectSize, int ID, int placedObjectIndex)
     {
@@ -15,10 +14,6 @@ public class GridData
         PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
         foreach (var pos in positionToOccupy)
         {
-            if (placedObjects.ContainsKey(pos))
-            {
-                throw new Exception($"Dictionary already contains this cell position {pos}");
-            }
             placedObjects[pos] = data;
         }
     }
@@ -83,7 +78,8 @@ public class GridData
 
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int selectedIndex, MapGenerator mapGenerator)
     {
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapGenerator.mapWidth, mapGenerator.mapHeight, mapGenerator.seed,mapGenerator.noiseScale,mapGenerator.octaves, mapGenerator.persistance, mapGenerator.lacunarity, mapGenerator.offset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapGenerator.mapWidth, mapGenerator.mapHeight, mapGenerator.seed,mapGenerator.noiseScale,
+                                                   mapGenerator.octaves, mapGenerator.persistance, mapGenerator.lacunarity, mapGenerator.offset);
         float[,] lightMap = mapGenerator.ReturnLightLevels();
         List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition, objectSize);
         foreach (var pos in positionToOccupy)
@@ -136,6 +132,7 @@ public class GridData
 		}
 		return true;
 	}
+    //---------------------------------------------
 
 	private Vector2Int ConvertToNoiseMapValues(int x, int y, int mapWidth)
     {

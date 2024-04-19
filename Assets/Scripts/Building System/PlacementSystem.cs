@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour
@@ -139,6 +140,10 @@ public class PlacementSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             StartPlacement(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            StartPlacement(6);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {

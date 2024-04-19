@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -78,7 +79,7 @@ public class ResourceManager : MonoBehaviour
 			}
 
 
-			if (CitizenAmount == 0)
+			if (CitizenAmount <= 0)
 			{
 				GameOver();
 			}
@@ -143,15 +144,12 @@ public class ResourceManager : MonoBehaviour
 				placementSystem.particleEffects);
             Vector2 mousePosition = placedHouses[index].transform.position;
             Vector3Int gridPosition = placementSystem.grid.WorldToCell(mousePosition);
-
             placementSystem.buildingState2.OnAction(gridPosition);
 			placementSystem.buildingState2 = null;
-           // objectPlacer.DestroyObject(placedHouses[index]);
 		}
 	}
 	private void GameOver()
 	{
-		//stop time; turn on gameOverScreen, block movement
 		Time.timeScale = 0;
 		gameOverScreen.SetActive(true);
 	}

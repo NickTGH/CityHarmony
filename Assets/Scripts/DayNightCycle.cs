@@ -89,17 +89,6 @@ public class DayNightCycle : MonoBehaviour
         }
         StartCoroutine(ActivateRain());
     }
-
-    private bool IsInCameraBounds(Vector3 particlePos)
-    {
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(particlePos);
-
-        if (screenPosition.x < 0 || screenPosition.x > Screen.width || screenPosition.y < 0 || screenPosition.y > Screen.height)
-        {
-            return true;
-        }
-        return false;
-    }
     public float GetLightLevel()
     {
         float lightLevel = percentage * 100;

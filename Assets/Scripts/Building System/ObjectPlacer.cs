@@ -12,7 +12,6 @@ public class ObjectPlacer : MonoBehaviour
 
     public void DestroyObject(GameObject obj)
     {
-        //placedGameObjects.Remove(obj);
         placedHouses.Remove(obj);
         Destroy(obj);
     }
@@ -30,6 +29,10 @@ public class ObjectPlacer : MonoBehaviour
         if (newObject.GetComponentInChildren<ConstructScript>() != null)
         {
             newObject.GetComponentInChildren<ConstructScript>().resourceManager = resourceManager;
+        }
+        if (newObject.GetComponentInChildren<HouseScript>() != null)
+        {
+            placedHouses.Add(newObject);
         }
 		newObject.transform.position = position;
         placedGameObjects.Add(newObject);
@@ -75,8 +78,10 @@ public class ObjectPlacer : MonoBehaviour
         {
             return;
         }
-         Vector3 particlePosition = new Vector3(placedGameObjects[gameObjectIndex].transform.position.x + placedGameObjects[gameObjectIndex].GetComponentInChildren<SpriteRenderer>().transform.localPosition.x*5,
-											   placedGameObjects[gameObjectIndex].transform.position.y + placedGameObjects[gameObjectIndex].GetComponentInChildren<SpriteRenderer>().transform.localPosition.y*5,
+         Vector3 particlePosition = new Vector3(placedGameObjects[gameObjectIndex].transform.position.x + 
+                                            placedGameObjects[gameObjectIndex].GetComponentInChildren<SpriteRenderer>().transform.localPosition.x*5,
+											   placedGameObjects[gameObjectIndex].transform.position.y + 
+                                               placedGameObjects[gameObjectIndex].GetComponentInChildren<SpriteRenderer>().transform.localPosition.y*5,
 											   placedGameObjects[gameObjectIndex].transform.position.z);
         Instantiate(effect, particlePosition, Quaternion.identity);
         if (placedGameObjects[gameObjectIndex].GetComponentInChildren<HouseScript>() != null)

@@ -34,7 +34,7 @@ public class LampScript : MonoBehaviour
     void Update()
     {
         float lightLevel = dayNightCycle.GetLightLevel();
-        if (lightLevel < 20 || lightLevel > 80)
+        if (lightLevel < 10 || lightLevel > 90)
         {
             if (!activated)
             {
@@ -67,7 +67,7 @@ public class LampScript : MonoBehaviour
                 {
                     continue;
                 }
-                if (dayNightCycle.GetLightLevel() < 20f)
+                if (dayNightCycle.GetLightLevel() < 10f)
                 {
                     if (lightMap[normalizedValues.x, normalizedValues.y] >= dayNightCycle.GetLightLevel() + 20f)
                     {
@@ -75,7 +75,7 @@ public class LampScript : MonoBehaviour
                     }
                     lightMap[normalizedValues.x, normalizedValues.y] += 40f;
                 }
-                else if(dayNightCycle.GetLightLevel() > 80f)
+                else if(dayNightCycle.GetLightLevel() > 90f)
                 {
                     if (lightMap[normalizedValues.x, normalizedValues.y] <= dayNightCycle.GetLightLevel() - 20f)
                     {

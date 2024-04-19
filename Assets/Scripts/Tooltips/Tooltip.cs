@@ -42,7 +42,6 @@ public class Tooltip : MonoBehaviour
 	{
 		if (Application.isEditor)
 		{
-
 			layoutElement.enabled = Mathf.Max(headerField.preferredWidth, descriptionField.preferredWidth) >= layoutElement.preferredWidth;
 		}
 

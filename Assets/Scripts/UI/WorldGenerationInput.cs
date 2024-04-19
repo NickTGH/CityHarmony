@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class WorldGenerationInput : MonoBehaviour
@@ -14,35 +15,38 @@ public class WorldGenerationInput : MonoBehaviour
 	private Toggle mediumToggle;
 	[SerializeField]
 	private Toggle largeToggle;
-
-	public void SelectSmallMap()
+    public void SetSeed(string s)
+    {
+        seed = s;
+    }
+    public void SelectSmallMap()
 	{
-		smallToggle.isOn = true;
+		if (smallToggle.isOn == false)
+			return;
 		mediumToggle.isOn = false;
 		largeToggle.isOn = false;
-		StaticValues.Size = 100;
+        StaticValues.Size = 100;
 	}
 
 	public void SelectMediumMap()
 	{
+		if (mediumToggle.isOn == false) 
+			return;
 		smallToggle.isOn = false;
-		mediumToggle.isOn = true;
 		largeToggle.isOn = false;
 		StaticValues.Size = 200;
 	}
-	public void SetSeed(string s)
-	{
-		seed = s;
-	}
+
 	public void SelectLargeMap()
 	{
+		if (largeToggle.isOn == false)
+			return;
 		smallToggle.isOn = false;
 		mediumToggle.isOn = false;
-		largeToggle.isOn = true;
-		StaticValues.Size = 300;
+        StaticValues.Size = 300;
 	}
 
-	public void GenerateWorld()
+    public void GenerateWorld()
 	{
 		if (seed != null && seed != string.Empty)
 		{
